@@ -1,5 +1,6 @@
 # Build outputs
 .rpmbuild/
+.appimage-build/
 .flatpak-builder/
 build-flatpak/
 dist/

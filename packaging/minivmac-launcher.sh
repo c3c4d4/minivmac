@@ -3,6 +3,8 @@ set -euo pipefail
 
 if [[ -n "${MINIVMAC_LIBEXEC_DIR:-}" ]]; then
   libexec_dir="${MINIVMAC_LIBEXEC_DIR}"
+elif [[ -n "${APPDIR:-}" ]]; then
+  libexec_dir="${APPDIR}/usr/libexec/minivmac"
 elif [[ -x /app/libexec/minivmac/minivmac-wayland ]]; then
   libexec_dir="/app/libexec/minivmac"
 else
