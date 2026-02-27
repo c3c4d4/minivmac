@@ -1,0 +1,42 @@
+app-id: io.github.minivmac.MinivMac
+runtime: org.freedesktop.Platform
+runtime-version: "24.08"
+sdk: org.freedesktop.Sdk
+command: minivmac
+finish-args:
+  - --share=ipc
+  - --device=dri
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --socket=pulseaudio
+  - --filesystem=home
+
+modules:
+  - name: minivmac
+    buildsystem: simple
+    build-commands:
+      - gcc -O2 -o setup/setup_t setup/tool.c
+
+      # Wayland-capable frontend (SDL2)
+      - ./setup/setup_t -t lx64 -api sd2 > setup-wayland.sh
+      - bash setup-wayland.sh
+      - sed -i '/strip --strip-unneeded "minivmac"/d' Makefile
+      - make -j"${FLATPAK_BUILDER_N_JOBS:-4}"
+      - install -Dpm0755 minivmac /app/libexec/minivmac/minivmac-wayland
+
+      # X11 fallback frontend
+      - ./setup/setup_t -t lx64 > setup-x11.sh
+      - bash setup-x11.sh
+      - sed -i '/strip --strip-unneeded "minivmac"/d' Makefile
+      - sed -i 's|$(ObjFiles) -ldl -L/usr/X11R6/lib -lX11|$(ObjFiles) -ldl -lX11|' Makefile
+      - make -j"${FLATPAK_BUILDER_N_JOBS:-4}"
+      - install -Dpm0755 minivmac /app/libexec/minivmac/minivmac-x11
+
+      - install -Dpm0755 minivmac-launcher.sh /app/bin/minivmac
+
+    sources:
+      - type: archive
+        url: https://minivmac.github.io/gryphel-mirror/d/minivmac/minivmac-36.04/minivmac-36.04.src.tgz
+        sha256: 9b7343cec87723177a203e69ad3baf20f49b4e8f03619e366c4bf2705167dfa4
+      - type: file
+        path: ../minivmac-launcher.sh

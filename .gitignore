@@ -1,0 +1,9 @@
+# Build outputs
+.rpmbuild/
+.flatpak-builder/
+build-flatpak/
+dist/
+
+# Editor/OS junk
+*~
+.DS_Store
