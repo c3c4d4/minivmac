@@ -20,7 +20,7 @@
   <screenshots>
     <screenshot type="default">
       <caption>Mini vMac application window.</caption>
-      <image type="source">https://raw.githubusercontent.com/c3c4d4/minivmac/flathub-prep/packaging/flatpak/screenshots/main.png</image>
+      <image type="source">https://raw.githubusercontent.com/c3c4d4/minivmac/main/packaging/flatpak/screenshots/main.png</image>
     </screenshot>
   </screenshots>
   <content_rating type="oars-1.1"/>
