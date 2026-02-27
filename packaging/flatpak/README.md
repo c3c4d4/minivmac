@@ -77,3 +77,9 @@ work when Wayland is unavailable (for example an X11 session).
 
 Use `packaging/flatpak/flathub-pr.md` as the PR text when opening the
 submission against `flathub/flathub:new-pr`.
+
+To copy submission files into a local clone of `flathub/flathub`, run:
+
+```bash
+./packaging/flatpak/export-flathub-files.sh /path/to/flathub
+```
